@@ -3,24 +3,19 @@
 
 import 'package:flutter/material.dart';
 
+void main() => runApp(MyApp());
+
 class MyApp extends StatelessWidget {
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Center(
-  //     child: Text(
-  //       "Hello World Travel",
-  //       textDirection: TextDirection.ltr,
-  //     ),
-  //   );
-  // }
+  static const String _title = "Hello World Travel App";
+  static const String _header = "Hello World Travel";
+  static const String _subHeader = "Discover the world";
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "Hello World Travel Title",
       home: Scaffold(
         appBar: AppBar(
-          title: Text("Hello World Travel App"),
+          title: Text(_title),
           backgroundColor: Colors.deepPurple,
         ),
         body: SingleChildScrollView(
@@ -32,7 +27,7 @@ class MyApp extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.all(10),
                     child: Text(
-                      "Hello World Travel",
+                      _header,
                       style: TextStyle(
                         fontSize: 26,
                         fontWeight: FontWeight.bold,
@@ -43,27 +38,21 @@ class MyApp extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.all(10),
                     child: Text(
-                      "Discover the world",
+                      _subHeader,
                       style: TextStyle(
                           fontSize: 20, color: Colors.deepPurpleAccent),
                     ),
                   ),
                   Padding(
                     padding: EdgeInsets.all(15),
-                    // child: Image.network(
-                    //   "https://images.freeimages.com/images/large-previews/eaa/the-beach-1464354.jpg",
-                    //   height: 350,
-                    // ),
-                    child: Center(
-                      child: Text("This is used in the absence of the image"),
+                    child: Image.network(
+                      "https://images.freeimages.com/images/large-previews/eaa/the-beach-1464354.jpg",
+                      height: 350,
                     ),
                   ),
                   Padding(
                     padding: EdgeInsets.all(15),
-                    child: FlatButton(
-                      child: Text("Contact Us"),
-                      onPressed: () => contactUs(context),
-                    ),
+                    child: MyStateAlertWidget(),
                   )
                 ],
               ),
@@ -73,24 +62,32 @@ class MyApp extends StatelessWidget {
       ),
     );
   }
-
-  // Show alert
-  void contactUs(BuildContext context) {
-    showDialog(
-        context: context,
-        builder: (BuildContext builder) {
-          return AlertDialog(
-            title: Text("Contact Us"),
-            content: Text("Mail us at hello@world.com"),
-            actions: <Widget>[
-              FlatButton(
-                child: Text("Close"),
-                onPressed: () => Navigator.of(context).pop(),
-              )
-            ],
-          );
-        });
-  }
 }
 
-void main() => runApp(MyApp());
+class MyStateAlertWidget extends StatelessWidget {
+  static const String _contactString = "Contact Us";
+  static const String _contentString = "Mail us at hello@world.com";
+  static const String _closeString = "Close";
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      child: Text(_contactString),
+      onPressed: () => showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: Text(_contactString),
+          content: Text(_contentString),
+          actions: <Widget>[
+            TextButton(
+              child: Text(_closeString),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
